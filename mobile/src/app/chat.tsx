@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from "react";
 
 import {
   View,
@@ -38,10 +41,21 @@ type ChatMessage = {
 export default function ChatScreen() {
   const { t } = useLanguage();
 
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [input, setInput] = useState("");
-  const [sessionId, setSessionId] = useState<number | null>(null);
-  const [loading, setLoading] = useState(false);
+  // ==============================
+  // STATE
+  // ==============================
+
+  const [messages, setMessages] =
+    useState<ChatMessage[]>([]);
+
+  const [input, setInput] =
+    useState("");
+
+  const [sessionId, setSessionId] =
+    useState<number | null>(null);
+
+  const [loading, setLoading] =
+    useState(false);
 
   const USER_ID = 2;
 
@@ -49,13 +63,15 @@ export default function ChatScreen() {
   // AUDIO RECORDER
   // ==============================
 
-  const audioRecorder = useAudioRecorder(
-    RecordingPresets.HIGH_QUALITY
-  );
+  const audioRecorder =
+    useAudioRecorder(
+      RecordingPresets.HIGH_QUALITY
+    );
 
-  const recorderState = useAudioRecorderState(
-    audioRecorder
-  );
+  const recorderState =
+    useAudioRecorderState(
+      audioRecorder
+    );
 
   // ==============================
   // START CHAT
@@ -67,7 +83,8 @@ export default function ChatScreen() {
 
   async function startChat() {
     try {
-      const session = await createChatSession(USER_ID);
+      const session =
+        await createChatSession(USER_ID);
 
       setSessionId(session.id);
 
@@ -75,11 +92,15 @@ export default function ChatScreen() {
         {
           id: "welcome",
           role: "assistant",
-          message: t.weatherAssistantWelcome,
+          message:
+            t.weatherAssistantWelcome,
         },
       ]);
     } catch (error) {
-      console.error("Chat session error:", error);
+      console.error(
+        "Chat session error:",
+        error
+      );
 
       Alert.alert(
         t.connectionError,
@@ -89,13 +110,17 @@ export default function ChatScreen() {
   }
 
   // ==============================
-  // SEND TEXT MESSAGE
+  // SEND MESSAGE
   // ==============================
 
   async function handleSend() {
     const text = input.trim();
 
-    if (!text || !sessionId || loading) {
+    if (
+      !text ||
+      !sessionId ||
+      loading
+    ) {
       return;
     }
 
@@ -105,45 +130,62 @@ export default function ChatScreen() {
       message: text,
     };
 
-    setMessages((previous) => [
-      ...previous,
-      userMessage,
-    ]);
+    setMessages(
+      (previous) => [
+        ...previous,
+        userMessage,
+      ]
+    );
 
     setInput("");
     setLoading(true);
 
     try {
-      const result = await sendChatMessage(
-        sessionId,
-        text
-      );
+      const result =
+        await sendChatMessage(
+          sessionId,
+          text
+        );
 
-      const assistantMessage: ChatMessage = {
+      const assistantMessage:
+        ChatMessage = {
         id:
           Date.now().toString() +
           "-assistant",
+
         role: "assistant",
-        message: result.response,
+
+        message:
+          result.response,
       };
 
-      setMessages((previous) => [
-        ...previous,
-        assistantMessage,
-      ]);
+      setMessages(
+        (previous) => [
+          ...previous,
+          assistantMessage,
+        ]
+      );
     } catch (error) {
-      console.error("Chat error:", error);
+      console.error(
+        "Chat error:",
+        error
+      );
 
-      setMessages((previous) => [
-        ...previous,
-        {
-          id:
-            Date.now().toString() +
-            "-error",
-          role: "assistant",
-          message: t.chatError,
-        },
-      ]);
+      setMessages(
+        (previous) => [
+          ...previous,
+          {
+            id:
+              Date.now().toString() +
+              "-error",
+
+            role: "assistant",
+
+            message:
+              t.chatError,
+          },
+        ]
+      );
     } finally {
       setLoading(false);
     }
@@ -156,23 +198,24 @@ export default function ChatScreen() {
   async function handleMicPress() {
     try {
       // STOP RECORDING
-      if (recorderState.isRecording) {
-        console.log("Stopping recording...");
+      if (
+        recorderState.isRecording
+      ) {
+        console.log(
+          "Stopping recording..."
+        );
 
         await audioRecorder.stop();
 
-        const audioUri = audioRecorder.uri;
-
-        console.log(
-          "Recorded audio URI:",
-          audioUri
-        );
+        const audioUri =
+          audioRecorder.uri;
 
         if (!audioUri) {
           Alert.alert(
             t.recordingError,
             t.audioNotFound
           );
+
           return;
         }
 
@@ -180,19 +223,19 @@ export default function ChatScreen() {
 
         try {
           const result =
-            await transcribeAudio(audioUri);
-
-          console.log(
-            "Transcription result:",
-            result
-          );
+            await transcribeAudio(
+              audioUri
+            );
 
           if (
             result &&
-            typeof result.text === "string" &&
+            typeof result.text ===
+              "string" &&
             result.text.trim()
           ) {
-            setInput(result.text);
+            setInput(
+              result.text
+            );
 
             Alert.alert(
               t.voiceRecognized,
@@ -267,7 +310,7 @@ export default function ChatScreen() {
   }
 
   // ==============================
-  // RENDER MESSAGE
+  // MESSAGE
   // ==============================
 
   function renderMessage({
@@ -275,12 +318,14 @@ export default function ChatScreen() {
   }: {
     item: ChatMessage;
   }) {
-    const isUser = item.role === "user";
+    const isUser =
+      item.role === "user";
 
     return (
       <View
         style={[
           styles.messageContainer,
+
           isUser
             ? styles.userContainer
             : styles.assistantContainer,
@@ -289,6 +334,7 @@ export default function ChatScreen() {
         <View
           style={[
             styles.bubble,
+
             isUser
               ? styles.userBubble
               : styles.assistantBubble,
@@ -297,7 +343,9 @@ export default function ChatScreen() {
           <Text
             style={[
               styles.messageText,
-              isUser && styles.userText,
+
+              isUser &&
+                styles.userText,
             ]}
           >
             {item.message}
@@ -339,26 +387,34 @@ export default function ChatScreen() {
         style={styles.messages}
         data={messages}
         renderItem={renderMessage}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) =>
+          item.id
+        }
         contentContainerStyle={
           styles.messagesList
         }
         keyboardShouldPersistTaps="handled"
-        automaticallyAdjustKeyboardInsets={true}
-        showsVerticalScrollIndicator={false}
-        keyboardDismissMode="interactive"
+        showsVerticalScrollIndicator={
+          false
+        }
       />
 
       {/* LOADING */}
 
       {loading && (
         <View
-          style={styles.loadingContainer}
+          style={
+            styles.loadingContainer
+          }
         >
-          <ActivityIndicator size="small" />
+          <ActivityIndicator
+            size="small"
+          />
 
           <Text
-            style={styles.loadingText}
+            style={
+              styles.loadingText
+            }
           >
             {recorderState.isRecording
               ? t.recording
@@ -370,17 +426,22 @@ export default function ChatScreen() {
       {/* INPUT */}
 
       <View
-        style={styles.inputContainer}
+        style={
+          styles.inputContainer
+        }
       >
         <TextInput
           style={styles.input}
           value={input}
-          onChangeText={setInput}
-          placeholder={t.typeMessage}
+          onChangeText={
+            setInput
+          }
+          placeholder={
+            t.typeMessage
+          }
           placeholderTextColor="#888"
           multiline
           textAlignVertical="center"
-          returnKeyType="default"
         />
 
         {/* MICROPHONE */}
@@ -388,16 +449,21 @@ export default function ChatScreen() {
         <TouchableOpacity
           style={[
             styles.micButton,
+
             recorderState.isRecording &&
               styles.micRecordingButton,
           ]}
-          onPress={handleMicPress}
+          onPress={
+            handleMicPress
+          }
           disabled={
             loading &&
             !recorderState.isRecording
           }
         >
-          <Text style={styles.micText}>
+          <Text
+            style={styles.micText}
+          >
             {recorderState.isRecording
               ? "⏹️"
               : "🎤"}
@@ -407,11 +473,17 @@ export default function ChatScreen() {
         {/* SEND */}
 
         <TouchableOpacity
-          style={styles.sendButton}
-          onPress={handleSend}
+          style={
+            styles.sendButton
+          }
+          onPress={
+            handleSend
+          }
           disabled={loading}
         >
-          <Text style={styles.sendText}>
+          <Text
+            style={styles.sendText}
+          >
             {t.send}
           </Text>
         </TouchableOpacity>

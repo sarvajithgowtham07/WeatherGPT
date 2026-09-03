@@ -7,4 +7,5 @@ pydantic-settings
 python-dotenv
 httpx
 google-genai
+openai
 python-multipart

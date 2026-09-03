@@ -7,7 +7,6 @@ from app.models.chat_message import ChatMessage
 from app.models.user import User
 from app.schemas.chat import ChatSessionCreate, ChatMessageCreate
 
-from app.ai.profession_detector import detect_profession
 from app.ai.response_generator import generate_chat_response
 from app.services.weather_service import get_weather
 
@@ -79,13 +78,10 @@ async def create_chat_message(
     db.refresh(user_message)
 
     # --------------------------------
-    # 4. Detect profession using AI
+    # 4. Use stored profession
     # --------------------------------
 
-    detected_profession = detect_profession(
-        message=message_data.message,
-        previous_profession=user.profession
-    )
+    detected_profession = user.profession or "General User"
 
     # --------------------------------
     # 5. Get real weather
@@ -93,58 +89,93 @@ async def create_chat_message(
 
     weather_context = {}
 
-    if user.latitude is not None and user.longitude is not None:
+    if (
+        user.latitude is not None
+        and user.longitude is not None
+    ):
+        try:
+            weather_data = await get_weather(
+                user.latitude,
+                user.longitude
+            )
 
-        weather_data = await get_weather(
-            user.latitude,
-            user.longitude
+            current = weather_data.get(
+                "current",
+                {}
+            )
+
+            hourly = weather_data.get(
+                "hourly",
+                {}
+            )
+
+            daily = weather_data.get(
+                "daily",
+                {}
+            )
+
+            weather_context = {
+                "temperature": current.get(
+                    "temperature_2m"
+                ),
+                "apparent_temperature": current.get(
+                    "apparent_temperature"
+                ),
+                "humidity": current.get(
+                    "relative_humidity_2m"
+                ),
+                "precipitation": current.get(
+                    "precipitation"
+                ),
+                "wind_speed": current.get(
+                    "wind_speed_10m"
+                ),
+                "weather_code": current.get(
+                    "weather_code"
+                ),
+                "hourly_summary": str(hourly),
+                "daily_summary": str(daily)
+            }
+
+        except Exception as error:
+            print(
+                f"Weather API error: {error}"
+            )
+
+            weather_context = {}
+
+    # --------------------------------
+    # 6. User selected language
+    # --------------------------------
+
+    language = user.language or "English"
+
+    # --------------------------------
+    # 7. Generate Gemini AI response
+    # --------------------------------
+
+    try:
+        ai_response = generate_chat_response(
+            user_message=message_data.message,
+            profession=detected_profession,
+            language=language,
+            latitude=user.latitude,
+            longitude=user.longitude,
+            weather_context=weather_context
         )
 
-        current = weather_data.get("current", {})
-        hourly = weather_data.get("hourly", {})
-        daily = weather_data.get("daily", {})
+    except Exception as error:
+        print(
+            f"Gemini AI error: {error}"
+        )
 
-        weather_context = {
-            "temperature": current.get("temperature_2m"),
-            "apparent_temperature": current.get(
-                "apparent_temperature"
-            ),
-            "humidity": current.get(
-                "relative_humidity_2m"
-            ),
-            "precipitation": current.get(
-                "precipitation"
-            ),
-            "wind_speed": current.get(
-                "wind_speed_10m"
-            ),
-            "weather_code": current.get(
-                "weather_code"
-            ),
-            "hourly_summary": str(hourly),
-            "daily_summary": str(daily)
-        }
-
-    # --------------------------------
-    # 6. Generate Gemini response
-    # --------------------------------
-
-    ai_response = generate_chat_response(
-        user_message=message_data.message,
-        profession=detected_profession,
-        language=user.language or "English",
-        latitude=user.latitude,
-        longitude=user.longitude,
-        weather_context=weather_context
-    )
-
-    # --------------------------------
-    # 7. Update detected profession
-    # --------------------------------
-
-    user.profession = detected_profession
-
-    db.add(user)
+        raise HTTPException(
+            status_code=503,
+            detail=(
+                "AI service is temporarily unavailable. "
+                "Please try again later."
+            )
+        )
 
     # --------------------------------
     # 8. Save AI response

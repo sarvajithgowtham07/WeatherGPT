@@ -4,6 +4,7 @@ export const translations = {
     map: "Map",
     chat: "Chat",
     settings: "Settings",
+    dashboard: "Dashboard",
 
     weather: "Weather",
     currentWeather: "Current Weather",
@@ -44,6 +45,25 @@ export const translations = {
     precipitation: "Precipitation",
     rain: "Rain",
     feelsLike: "Feels like",
+    windSpeed: "Wind",
+
+    today: "Today",
+    now: "Now",
+    hourlyForecast: "Today's Hourly Forecast",
+
+    clearSky: "Clear sky",
+    partlyCloudy: "Partly cloudy",
+    fog: "Fog",
+    drizzle: "Drizzle",
+    rainShowers: "Rain showers",
+    snow: "Snow",
+    snowShowers: "Snow showers",
+    thunderstorm: "Thunderstorm",
+    weatherCondition: "Weather",
+
+    weatherUnavailable: "Weather unavailable",
+    unableToGetWeather: "Unable to get weather information.",
+    tapToRetry: "Tap here to retry",
 
     selectProfession: "Select Profession",
     profileUpdated: "Profile Updated",
@@ -52,20 +72,20 @@ export const translations = {
     appSettings: "App settings",
     settingsComingSoon: "More settings will be added later.",
 
-    aiWeatherAssistant: "AI Weather Assistant",
+    aiWeatherAssistant: "WeatherGPT AI",
     weatherAssistantWelcome:
       "Hello! I'm WeatherGPT. Ask me anything about the weather.",
+    aiWeatherDescription:
+      "Ask WeatherGPT about today's weather, tomorrow's forecast, rain, wind, travel conditions, farming conditions, or weather alerts.",
 
     connectionError: "Connection Error",
-    unableToConnect:
-      "Unable to connect to WeatherGPT.",
+    unableToConnect: "Unable to connect to WeatherGPT.",
 
     chatError:
       "Sorry, I couldn't get a response. Please try again.",
 
     recordingError: "Recording Error",
-    audioNotFound:
-      "Audio recording was not found.",
+    audioNotFound: "Audio recording was not found.",
 
     voiceRecognized: "Voice Recognized",
     noSpeech: "No Speech Detected",
@@ -75,8 +95,7 @@ export const translations = {
     transcriptionFailed:
       "Could not convert your voice to text.",
 
-    microphonePermission:
-      "Microphone Permission",
+    microphonePermission: "Microphone Permission",
     allowMicrophone:
       "Please allow WeatherGPT to use your microphone.",
 
@@ -92,16 +111,13 @@ export const translations = {
       "Location permission was denied.",
     locationWeatherError:
       "Unable to get location or weather.",
-    locationNotAvailable:
-      "Location not available",
-    weatherAtLocation:
-      "Weather at Your Location",
+    locationNotAvailable: "Location not available",
+    weatherAtLocation: "Weather at Your Location",
 
     latitude: "Latitude",
     longitude: "Longitude",
 
-    failedProfile:
-      "Failed to load profile",
+    failedProfile: "Failed to load profile",
     notSet: "Not set",
     locationNotSet: "Location not set",
     saving: "Saving...",
@@ -122,6 +138,7 @@ export const translations = {
     map: "नक्शा",
     chat: "चैट",
     settings: "सेटिंग्स",
+    dashboard: "डैशबोर्ड",
 
     weather: "मौसम",
     currentWeather: "वर्तमान मौसम",
@@ -161,7 +178,27 @@ export const translations = {
     wind: "हवा",
     precipitation: "वर्षा",
     rain: "बारिश",
-    feelsLike: "महसूस हो रहा है",
+    feelsLike: "महसूस होने वाला तापमान",
+    windSpeed: "हवा",
+
+    today: "आज",
+    now: "अभी",
+    hourlyForecast: "आज का प्रति घंटा मौसम पूर्वानुमान",
+
+    clearSky: "साफ आसमान",
+    partlyCloudy: "आंशिक रूप से बादल",
+    fog: "कोहरा",
+    drizzle: "बूंदाबांदी",
+    rainShowers: "बारिश की बौछारें",
+    snow: "बर्फबारी",
+    snowShowers: "बर्फ की बौछारें",
+    thunderstorm: "आंधी-तूफान",
+    weatherCondition: "मौसम",
+
+    weatherUnavailable: "मौसम उपलब्ध नहीं है",
+    unableToGetWeather:
+      "मौसम की जानकारी प्राप्त नहीं हो सकी।",
+    tapToRetry: "पुनः प्रयास करने के लिए यहाँ टैप करें",
 
     selectProfession: "व्यवसाय चुनें",
     profileUpdated: "प्रोफ़ाइल अपडेट हो गई",
@@ -171,9 +208,11 @@ export const translations = {
     settingsComingSoon:
       "और सेटिंग्स बाद में जोड़ी जाएंगी।",
 
-    aiWeatherAssistant: "AI मौसम सहायक",
+    aiWeatherAssistant: "WeatherGPT AI",
     weatherAssistantWelcome:
       "नमस्ते! मैं WeatherGPT हूँ। मौसम के बारे में कुछ भी पूछें।",
+    aiWeatherDescription:
+      "आज के मौसम, कल के पूर्वानुमान, बारिश, हवा, यात्रा, खेती या मौसम चेतावनियों के बारे में WeatherGPT से पूछें।",
 
     connectionError: "कनेक्शन त्रुटि",
     unableToConnect:
@@ -206,7 +245,8 @@ export const translations = {
     recording: "रिकॉर्डिंग...",
     thinking: "WeatherGPT सोच रहा है...",
 
-    gettingLocation: "आपका स्थान प्राप्त किया जा रहा है...",
+    gettingLocation:
+      "आपका स्थान प्राप्त किया जा रहा है...",
     locationPermissionDenied:
       "स्थान की अनुमति अस्वीकार कर दी गई।",
     locationWeatherError:
@@ -241,6 +281,7 @@ export const translations = {
     map: "మ్యాప్",
     chat: "చాట్",
     settings: "సెట్టింగ్స్",
+    dashboard: "డ్యాష్‌బోర్డ్",
 
     weather: "వాతావరణం",
     currentWeather: "ప్రస్తుత వాతావరణం",
@@ -281,6 +322,26 @@ export const translations = {
     precipitation: "వర్షపాతం",
     rain: "వర్షం",
     feelsLike: "అనిపించే ఉష్ణోగ్రత",
+    windSpeed: "గాలి",
+
+    today: "ఈరోజు",
+    now: "ఇప్పుడు",
+    hourlyForecast: "ఈరోజు గంటల వారీ వాతావరణ అంచనా",
+
+    clearSky: "ఆకాశం నిర్మలంగా ఉంది",
+    partlyCloudy: "పాక్షికంగా మేఘావృతం",
+    fog: "పొగమంచు",
+    drizzle: "చినుకులు",
+    rainShowers: "వర్షపు జల్లులు",
+    snow: "మంచు",
+    snowShowers: "మంచు జల్లులు",
+    thunderstorm: "ఉరుములతో కూడిన వర్షం",
+    weatherCondition: "వాతావరణం",
+
+    weatherUnavailable: "వాతావరణ సమాచారం అందుబాటులో లేదు",
+    unableToGetWeather:
+      "వాతావరణ సమాచారాన్ని పొందలేకపోయాము.",
+    tapToRetry: "మళ్లీ ప్రయత్నించడానికి ఇక్కడ నొక్కండి",
 
     selectProfession: "వృత్తిని ఎంచుకోండి",
     profileUpdated: "ప్రొఫైల్ నవీకరించబడింది",
@@ -290,9 +351,11 @@ export const translations = {
     settingsComingSoon:
       "మరిన్ని సెట్టింగ్స్ తరువాత జోడించబడతాయి.",
 
-    aiWeatherAssistant: "AI వాతావరణ సహాయకుడు",
+    aiWeatherAssistant: "WeatherGPT AI",
     weatherAssistantWelcome:
       "నమస్కారం! నేను WeatherGPT. వాతావరణం గురించి ఏదైనా అడగండి.",
+    aiWeatherDescription:
+      "ఈరోజు వాతావరణం, రేపటి అంచనా, వర్షం, గాలి, ప్రయాణ పరిస్థితులు, వ్యవసాయ పరిస్థితులు లేదా వాతావరణ హెచ్చరికల గురించి WeatherGPTని అడగండి.",
 
     connectionError: "కనెక్షన్ లోపం",
     unableToConnect:
@@ -307,8 +370,7 @@ export const translations = {
 
     voiceRecognized: "వాయిస్ గుర్తించబడింది",
     noSpeech: "మాట వినబడలేదు",
-    tryAgain:
-      "దయచేసి మళ్లీ మాట్లాడండి.",
+    tryAgain: "దయచేసి మళ్లీ మాట్లాడండి.",
 
     transcriptionError: "ట్రాన్స్‌క్రిప్షన్ లోపం",
     transcriptionFailed:
@@ -361,6 +423,7 @@ export const translations = {
     map: "வரைபடம்",
     chat: "அரட்டை",
     settings: "அமைப்புகள்",
+    dashboard: "டாஷ்போர்டு",
 
     weather: "வானிலை",
     currentWeather: "தற்போதைய வானிலை",
@@ -401,6 +464,26 @@ export const translations = {
     precipitation: "மழைப்பொழிவு",
     rain: "மழை",
     feelsLike: "உணரப்படும் வெப்பநிலை",
+    windSpeed: "காற்று",
+
+    today: "இன்று",
+    now: "இப்போது",
+    hourlyForecast: "இன்றைய மணிநேர வானிலை முன்னறிவிப்பு",
+
+    clearSky: "தெளிவான வானம்",
+    partlyCloudy: "ஓரளவு மேகமூட்டம்",
+    fog: "மூடுபனி",
+    drizzle: "தூறல்",
+    rainShowers: "மழைத்தூறல்",
+    snow: "பனிப்பொழிவு",
+    snowShowers: "பனித்தூறல்",
+    thunderstorm: "இடியுடன் கூடிய மழை",
+    weatherCondition: "வானிலை",
+
+    weatherUnavailable: "வானிலை கிடைக்கவில்லை",
+    unableToGetWeather:
+      "வானிலை தகவலைப் பெற முடியவில்லை.",
+    tapToRetry: "மீண்டும் முயற்சிக்க இங்கே தட்டவும்",
 
     selectProfession: "தொழிலைத் தேர்ந்தெடுக்கவும்",
     profileUpdated: "சுயவிவரம் புதுப்பிக்கப்பட்டது",
@@ -410,9 +493,11 @@ export const translations = {
     settingsComingSoon:
       "மேலும் அமைப்புகள் பின்னர் சேர்க்கப்படும்.",
 
-    aiWeatherAssistant: "AI வானிலை உதவியாளர்",
+    aiWeatherAssistant: "WeatherGPT AI",
     weatherAssistantWelcome:
       "வணக்கம்! நான் WeatherGPT. வானிலை பற்றி எதையும் கேளுங்கள்.",
+    aiWeatherDescription:
+      "இன்றைய வானிலை, நாளைய முன்னறிவிப்பு, மழை, காற்று, பயணம், விவசாயம் அல்லது வானிலை எச்சரிக்கைகள் பற்றி WeatherGPTயிடம் கேளுங்கள்.",
 
     connectionError: "இணைப்பு பிழை",
     unableToConnect:
@@ -481,6 +566,7 @@ export const translations = {
     map: "ನಕ್ಷೆ",
     chat: "ಚಾಟ್",
     settings: "ಸೆಟ್ಟಿಂಗ್ಸ್",
+    dashboard: "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
 
     weather: "ಹವಾಮಾನ",
     currentWeather: "ಪ್ರಸ್ತುತ ಹವಾಮಾನ",
@@ -521,6 +607,26 @@ export const translations = {
     precipitation: "ಮಳೆ",
     rain: "ಮಳೆ",
     feelsLike: "ಅನುಭವವಾಗುವ ತಾಪಮಾನ",
+    windSpeed: "ಗಾಳಿ",
+
+    today: "ಇಂದು",
+    now: "ಈಗ",
+    hourlyForecast: "ಇಂದಿನ ಗಂಟೆವಾರು ಹವಾಮಾನ ಮುನ್ಸೂಚನೆ",
+
+    clearSky: "ಸ್ವಚ್ಛ ಆಕಾಶ",
+    partlyCloudy: "ಭಾಗಶಃ ಮೋಡ",
+    fog: "ಮಂಜು",
+    drizzle: "ತುಂತುರು ಮಳೆ",
+    rainShowers: "ಮಳೆಯ ತುಂತುರು",
+    snow: "ಹಿಮ",
+    snowShowers: "ಹಿಮದ ತುಂತುರು",
+    thunderstorm: "ಗುಡುಗು ಸಹಿತ ಮಳೆ",
+    weatherCondition: "ಹವಾಮಾನ",
+
+    weatherUnavailable: "ಹವಾಮಾನ ಲಭ್ಯವಿಲ್ಲ",
+    unableToGetWeather:
+      "ಹವಾಮಾನ ಮಾಹಿತಿಯನ್ನು ಪಡೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.",
+    tapToRetry: "ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಲು ಇಲ್ಲಿ ಟ್ಯಾಪ್ ಮಾಡಿ",
 
     selectProfession: "ವೃತ್ತಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
     profileUpdated: "ಪ್ರೊಫೈಲ್ ನವೀಕರಿಸಲಾಗಿದೆ",
@@ -530,9 +636,11 @@ export const translations = {
     settingsComingSoon:
       "ಹೆಚ್ಚಿನ ಸೆಟ್ಟಿಂಗ್ಸ್ ಅನ್ನು ನಂತರ ಸೇರಿಸಲಾಗುತ್ತದೆ.",
 
-    aiWeatherAssistant: "AI ಹವಾಮಾನ ಸಹಾಯಕ",
+    aiWeatherAssistant: "WeatherGPT AI",
     weatherAssistantWelcome:
       "ನಮಸ್ಕಾರ! ನಾನು WeatherGPT. ಹವಾಮಾನದ ಬಗ್ಗೆ ಏನನ್ನಾದರೂ ಕೇಳಿ.",
+    aiWeatherDescription:
+      "ಇಂದಿನ ಹವಾಮಾನ, ನಾಳೆಯ ಮುನ್ಸೂಚನೆ, ಮಳೆ, ಗಾಳಿ, ಪ್ರಯಾಣ, ಕೃಷಿ ಅಥವಾ ಹವಾಮಾನ ಎಚ್ಚರಿಕೆಗಳ ಬಗ್ಗೆ WeatherGPT ಅನ್ನು ಕೇಳಿ.",
 
     connectionError: "ಸಂಪರ್ಕ ದೋಷ",
     unableToConnect:
@@ -601,6 +709,7 @@ export const translations = {
     map: "नकाशा",
     chat: "चॅट",
     settings: "सेटिंग्ज",
+    dashboard: "डॅशबोर्ड",
 
     weather: "हवामान",
     currentWeather: "सध्याचे हवामान",
@@ -641,6 +750,26 @@ export const translations = {
     precipitation: "पर्जन्य",
     rain: "पाऊस",
     feelsLike: "जाणवणारे तापमान",
+    windSpeed: "वारा",
+
+    today: "आज",
+    now: "आत्ता",
+    hourlyForecast: "आजचा तासानुसार हवामान अंदाज",
+
+    clearSky: "निरभ्र आकाश",
+    partlyCloudy: "अंशतः ढगाळ",
+    fog: "धुके",
+    drizzle: "रिमझिम पाऊस",
+    rainShowers: "पावसाच्या सरी",
+    snow: "हिमवृष्टी",
+    snowShowers: "हिमवृष्टीच्या सरी",
+    thunderstorm: "मेघगर्जनेसह पाऊस",
+    weatherCondition: "हवामान",
+
+    weatherUnavailable: "हवामान उपलब्ध नाही",
+    unableToGetWeather:
+      "हवामानाची माहिती मिळवता आली नाही.",
+    tapToRetry: "पुन्हा प्रयत्न करण्यासाठी येथे टॅप करा",
 
     selectProfession: "व्यवसाय निवडा",
     profileUpdated: "प्रोफाइल अपडेट झाले",
@@ -650,9 +779,11 @@ export const translations = {
     settingsComingSoon:
       "अधिक सेटिंग्ज नंतर जोडल्या जातील.",
 
-    aiWeatherAssistant: "AI हवामान सहाय्यक",
+    aiWeatherAssistant: "WeatherGPT AI",
     weatherAssistantWelcome:
       "नमस्कार! मी WeatherGPT आहे. हवामानाबद्दल काहीही विचारा.",
+    aiWeatherDescription:
+      "आजचे हवामान, उद्याचा अंदाज, पाऊस, वारा, प्रवास, शेती किंवा हवामानाच्या इशाऱ्यांबद्दल WeatherGPT ला विचारा.",
 
     connectionError: "कनेक्शन त्रुटी",
     unableToConnect:
@@ -717,14 +848,8 @@ export const translations = {
   },
 };
 
-export type Language =
-  keyof typeof translations;
+export type Language = keyof typeof translations;
 
-export function getTranslations(
-  language: Language
-) {
-  return (
-    translations[language] ||
-    translations.English
-  );
+export function getTranslations(language: Language) {
+  return translations[language] || translations.English;
 }

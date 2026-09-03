@@ -29,6 +29,9 @@ export function LanguageProvider({
 }: {
   children: React.ReactNode;
 }) {
+  // English is the default language.
+  // User must still press Continue
+  // on the language selection screen.
   const [language, setLanguageState] =
     useState<Language>("English");
 

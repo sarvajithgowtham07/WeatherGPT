@@ -2,7 +2,7 @@ import { fetch as expoFetch } from "expo/fetch";
 import { File } from "expo-file-system";
 import { WeatherResponse } from "./weather";
 
-const API_BASE_URL = "http://192.168.137.1:8000/api/v1";
+const API_BASE_URL = "http://192.168.29.28:8000/api/v1";
 
 export async function checkBackendHealth() {
   const response = await fetch(
