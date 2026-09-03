@@ -21,8 +21,14 @@ import { WeatherResponse } from '../api/weather';
 import HourlyWeatherCard from '../components/HourlyWeatherCard';
 import ForecastCard from '../components/ForecastCard';
 
+import { useLanguage } from '../i18n/LanguageContext';
 
 export default function HomeScreen() {
+  // ==============================
+  // LANGUAGE
+  // ==============================
+
+  const { t } = useLanguage();
 
   // ==============================
   // STATE
@@ -49,20 +55,17 @@ export default function HomeScreen() {
   const [forecastDays, setForecastDays] =
     useState<number[]>([]);
 
-
   // ==============================
   // LOCATION SEARCH
   // ==============================
 
   const handleLocationSearch = async () => {
-
     if (!locationName.trim()) {
-      setError('Please enter a location.');
+      setError(t.enterLocation);
       return;
     }
 
     try {
-
       setLoading(true);
       setError(null);
 
@@ -71,25 +74,24 @@ export default function HomeScreen() {
         locationName.trim()
       );
 
-      // Search location name
       const location =
-        await searchLocation(locationName.trim());
+        await searchLocation(
+          locationName.trim()
+        );
 
       console.log(
         'Location result:',
         location
       );
 
-      // Check whether location was found
       if (
         location.latitude === undefined ||
         location.longitude === undefined
       ) {
-        setError('Location not found.');
+        setError(t.locationNotFound);
         return;
       }
 
-      // Get weather using coordinates
       const weatherData =
         await getWeather(
           location.latitude,
@@ -98,7 +100,6 @@ export default function HomeScreen() {
 
       setWeather(weatherData);
 
-      // Display location name
       setSearchedLocation(
         [
           location.name,
@@ -114,12 +115,12 @@ export default function HomeScreen() {
       // ==============================
 
       const today =
-        weatherData.hourly.time[0].split('T')[0];
+        weatherData.hourly.time[0]
+          .split('T')[0];
 
       const indexes =
         weatherData.hourly.time
           .map((time, index) => {
-
             if (time.startsWith(today)) {
               return index;
             }
@@ -137,7 +138,6 @@ export default function HomeScreen() {
         indexes
       );
 
-
       // ==============================
       // 7-DAY FORECAST
       // ==============================
@@ -153,42 +153,29 @@ export default function HomeScreen() {
         '7-day forecast indexes:',
         days
       );
-
     } catch (error) {
-
       console.error(
         'Location search error:',
         error
       );
 
       setError(
-        'Unable to find weather for this location.'
+        t.unableFindWeather
       );
-
     } finally {
-
       setLoading(false);
-
     }
   };
-
 
   // ==============================
   // INITIAL WEATHER LOAD
   // ==============================
 
   useEffect(() => {
-
     const loadData = async () => {
-
       try {
-
-        // Check backend
         await checkBackendHealth();
 
-        // Temporary initial location
-        // Hyderabad is only the starting location.
-        // User can search for any location afterward.
         const data =
           await getWeather(
             17.3850,
@@ -203,18 +190,17 @@ export default function HomeScreen() {
 
         setError(null);
 
-
         // ==============================
         // TODAY'S HOURLY FORECAST
         // ==============================
 
         const today =
-          data.hourly.time[0].split('T')[0];
+          data.hourly.time[0]
+            .split('T')[0];
 
         const indexes =
           data.hourly.time
             .map((time, index) => {
-
               if (time.startsWith(today)) {
                 return index;
               }
@@ -232,7 +218,6 @@ export default function HomeScreen() {
           indexes
         );
 
-
         // ==============================
         // 7-DAY FORECAST
         // ==============================
@@ -248,38 +233,32 @@ export default function HomeScreen() {
           '7-day forecast indexes:',
           days
         );
-
       } catch (error) {
-
         console.error(
           'Error loading data:',
           error
         );
 
         setError(
-          'Unable to load weather data'
+          t.unableLoadWeather
         );
-
       } finally {
-
         setLoading(false);
-
       }
     };
 
     loadData();
-
   }, []);
-
 
   // ==============================
   // UI
   // ==============================
 
   return (
-
     <ScrollView
-      contentContainerStyle={styles.container}
+      contentContainerStyle={
+        styles.container
+      }
     >
 
       {/* ==============================
@@ -291,9 +270,8 @@ export default function HomeScreen() {
       </Text>
 
       <Text style={styles.subtitle}>
-        Your AI Weather Assistant
+        {t.aiWeatherAssistant}
       </Text>
-
 
       {/* ==============================
           LOCATION SEARCH
@@ -303,39 +281,49 @@ export default function HomeScreen() {
 
         <TextInput
           style={styles.input}
-          placeholder="Enter any city, village or location"
+          placeholder={
+            t.searchLocation
+          }
           value={locationName}
-          onChangeText={setLocationName}
-          onSubmitEditing={handleLocationSearch}
+          onChangeText={
+            setLocationName
+          }
+          onSubmitEditing={
+            handleLocationSearch
+          }
           returnKeyType="search"
         />
 
         <Pressable
           style={styles.searchButton}
-          onPress={handleLocationSearch}
+          onPress={
+            handleLocationSearch
+          }
         >
-
-          <Text style={styles.searchButtonText}>
-            🔍 Search Weather
+          <Text
+            style={
+              styles.searchButtonText
+            }
+          >
+            🔍 {t.searchWeather}
           </Text>
-
         </Pressable>
 
       </View>
-
 
       {/* ==============================
           SELECTED LOCATION
       ============================== */}
 
       {searchedLocation !== '' && (
-
-        <Text style={styles.locationText}>
-          📍 Weather for {searchedLocation}
+        <Text
+          style={
+            styles.locationText
+          }
+        >
+          📍 {searchedLocation}
         </Text>
-
       )}
-
 
       {/* ==============================
           MAP BUTTON
@@ -343,15 +331,16 @@ export default function HomeScreen() {
 
       <Pressable
         style={styles.mapButton}
-        onPress={() => router.push('/map')}
+        onPress={() =>
+          router.push('/map')
+        }
       >
-
-        <Text style={styles.mapButtonText}>
-          🗺️ Open Weather Map
+        <Text
+          style={styles.mapButtonText}
+        >
+          🗺️ {t.weatherMap}
         </Text>
-
       </Pressable>
-
 
       {/* ==============================
           WEATHER CARD
@@ -360,18 +349,15 @@ export default function HomeScreen() {
       <View style={styles.card}>
 
         <Text style={styles.cardTitle}>
-          Current Weather
+          {t.currentWeather}
         </Text>
-
 
         {/* LOADING */}
 
         {loading ? (
-
           <Text style={styles.cardText}>
-            ⏳ Loading weather...
+            ⏳ {t.loading}
           </Text>
-
         ) : error ? (
 
           /* ERROR */
@@ -388,129 +374,175 @@ export default function HomeScreen() {
 
             {/* TEMPERATURE */}
 
-            <Text style={styles.temperature}>
-              {weather.current.temperature_2m}°C
+            <Text
+              style={
+                styles.temperature
+              }
+            >
+              {
+                weather.current
+                  .temperature_2m
+              }°C
             </Text>
-
 
             {/* FEELS LIKE */}
 
-            <Text style={styles.weatherText}>
-              Feels like{' '}
-              {weather.current.apparent_temperature}°C
+            <Text
+              style={
+                styles.weatherText
+              }
+            >
+              {t.feelsLike}{' '}
+              {
+                weather.current
+                  .apparent_temperature
+              }°C
             </Text>
-
 
             {/* HUMIDITY */}
 
-            <Text style={styles.weatherText}>
-              💧 Humidity:{' '}
-              {weather.current.relative_humidity_2m}%
+            <Text
+              style={
+                styles.weatherText
+              }
+            >
+              💧 {t.humidity}:{' '}
+              {
+                weather.current
+                  .relative_humidity_2m
+              }%
             </Text>
-
 
             {/* PRECIPITATION */}
 
-            <Text style={styles.weatherText}>
-              🌧️ Precipitation:{' '}
-              {weather.current.precipitation} mm
+            <Text
+              style={
+                styles.weatherText
+              }
+            >
+              🌧️ {t.precipitation}:{' '}
+              {
+                weather.current
+                  .precipitation
+              } mm
             </Text>
-
 
             {/* WIND */}
 
-            <Text style={styles.weatherText}>
-              💨 Wind:{' '}
-              {weather.current.wind_speed_10m} km/h
+            <Text
+              style={
+                styles.weatherText
+              }
+            >
+              💨 {t.wind}:{' '}
+              {
+                weather.current
+                  .wind_speed_10m
+              } km/h
             </Text>
-
 
             {/* ==============================
                 HOURLY FORECAST
             ============================== */}
 
-            <Text style={styles.hourlyTitle}>
-              Hourly Forecast
+            <Text
+              style={
+                styles.hourlyTitle
+              }
+            >
+              {t.forecast}
             </Text>
-
 
             <ScrollView
               horizontal
-              showsHorizontalScrollIndicator={false}
-              style={styles.hourlyScroll}
+              showsHorizontalScrollIndicator={
+                false
+              }
+              style={
+                styles.hourlyScroll
+              }
             >
-
-              {todayHours.map((index) => (
-
-                <HourlyWeatherCard
-                  key={index}
-                  time={
-                    weather.hourly.time[index]
-                  }
-                  temperature={
-                    weather.hourly.temperature_2m[index]
-                  }
-                  precipitationProbability={
-                    weather.hourly
-                      .precipitation_probability[index]
-                  }
-                />
-
-              ))}
-
+              {todayHours.map(
+                (index) => (
+                  <HourlyWeatherCard
+                    key={index}
+                    time={
+                      weather.hourly
+                        .time[index]
+                    }
+                    temperature={
+                      weather.hourly
+                        .temperature_2m[
+                        index
+                      ]
+                    }
+                    precipitationProbability={
+                      weather.hourly
+                        .precipitation_probability[
+                        index
+                      ]
+                    }
+                  />
+                )
+              )}
             </ScrollView>
-
 
             {/* ==============================
                 7-DAY FORECAST
             ============================== */}
 
-            <Text style={styles.forecastTitle}>
-              7-Day Forecast
+            <Text
+              style={
+                styles.forecastTitle
+              }
+            >
+              {t.sevenDayForecast}
             </Text>
 
-
-            {forecastDays.map((index) => (
-
-              <ForecastCard
-                key={index}
-                date={
-                  weather.daily.time[index]
-                }
-                maxTemperature={
-                  weather.daily
-                    .temperature_2m_max[index]
-                }
-                minTemperature={
-                  weather.daily
-                    .temperature_2m_min[index]
-                }
-                precipitationProbability={
-                  weather.daily
-                    .precipitation_probability_max[index]
-                }
-              />
-
-            ))}
+            {forecastDays.map(
+              (index) => (
+                <ForecastCard
+                  key={index}
+                  date={
+                    weather.daily
+                      .time[index]
+                  }
+                  maxTemperature={
+                    weather.daily
+                      .temperature_2m_max[
+                      index
+                    ]
+                  }
+                  minTemperature={
+                    weather.daily
+                      .temperature_2m_min[
+                      index
+                    ]
+                  }
+                  precipitationProbability={
+                    weather.daily
+                      .precipitation_probability_max[
+                      index
+                    ]
+                  }
+                />
+              )
+            )}
 
           </View>
-
         ) : null}
 
       </View>
 
     </ScrollView>
-
   );
 }
-
 
 // ==========================================
 // STYLES
 // ==========================================
 
 const styles = StyleSheet.create({
-
   container: {
     flexGrow: 1,
     padding: 24,
@@ -527,7 +559,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 8,
   },
-
 
   // ==============================
   // SEARCH
@@ -565,7 +596,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
-
   // ==============================
   // MAP
   // ==============================
@@ -582,7 +612,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-
 
   // ==============================
   // WEATHER CARD
@@ -621,7 +650,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-
   // ==============================
   // HOURLY
   // ==============================
@@ -637,7 +665,6 @@ const styles = StyleSheet.create({
     marginHorizontal: -4,
   },
 
-
   // ==============================
   // 7-DAY FORECAST
   // ==============================
@@ -648,5 +675,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-
 });

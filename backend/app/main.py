@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 
+
 from app.api.v1.health import router as health_router
 from app.api.v1.users import router as users_router
 from app.api.v1.chat import router as chat_router
 from app.api.v1.weather import router as weather_router
 from app.api.v1.geocoding import router as geocoding_router
-
+from app.api.v1.voice import router as voice_router
 
 app = FastAPI(
     title="WeatherGPT API",
@@ -35,6 +36,10 @@ app.include_router(
 
 app.include_router(
     geocoding_router,
+    prefix="/api/v1"
+)
+app.include_router(
+    voice_router,
     prefix="/api/v1"
 )
 

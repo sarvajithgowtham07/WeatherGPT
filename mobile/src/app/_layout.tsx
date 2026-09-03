@@ -1,57 +1,84 @@
-import { Tabs } from 'expo-router';
+import { Tabs } from "expo-router";
+import { useState } from "react";
 
-export default function RootLayout() {
+import {
+  LanguageProvider,
+  useLanguage,
+} from "../i18n/LanguageContext";
+
+function AppTabs() {
+  const { t } = useLanguage();
+
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
+    <Tabs>
       <Tabs.Screen
         name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: () => null,
-        }}
+        options={{ title: t.home }}
       />
 
       <Tabs.Screen
         name="map"
-        options={{
-          title: 'Map',
-          tabBarIcon: () => null,
-        }}
+        options={{ title: t.map }}
       />
 
       <Tabs.Screen
         name="chat"
-        options={{
-          title: 'Chat',
-          tabBarIcon: () => null,
-        }}
+        options={{ title: t.chat }}
       />
 
       <Tabs.Screen
         name="settings"
-        options={{
-          title: 'Settings',
-          tabBarIcon: () => null,
-        }}
-      />
-
-      <Tabs.Screen
-        name="dashboard"
-        options={{
-          href: null,
-        }}
+        options={{ title: t.settings }}
       />
 
       <Tabs.Screen
         name="profile"
-        options={{
-          href: null,
-        }}
+        options={{ href: null }}
+      />
+
+      <Tabs.Screen
+        name="language"
+        options={{ href: null }}
       />
     </Tabs>
+  );
+}
+
+function AppContent() {
+  const [languageSelected, setLanguageSelected] =
+    useState(false);
+
+  if (!languageSelected) {
+    return (
+      <LanguageScreen
+        onLanguageSelected={() =>
+          setLanguageSelected(true)
+        }
+      />
+    );
+  }
+
+  return <AppTabs />;
+}
+
+function LanguageScreen({
+  onLanguageSelected,
+}: {
+  onLanguageSelected: () => void;
+}) {
+  const Screen = require("./language").default;
+
+  return (
+    <Screen
+      onLanguageSelected={onLanguageSelected}
+    />
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 }

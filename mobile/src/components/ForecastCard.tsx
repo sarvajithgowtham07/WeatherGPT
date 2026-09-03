@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface ForecastCardProps {
   date: string;
@@ -13,6 +14,8 @@ export default function ForecastCard({
   minTemperature,
   precipitationProbability,
 }: ForecastCardProps) {
+
+  const { t } = useLanguage();
 
   const formattedDate = new Date(date).toLocaleDateString([], {
     weekday: 'short',
@@ -32,7 +35,7 @@ export default function ForecastCard({
       </Text>
 
       <Text style={styles.rain}>
-        🌧️ Rain {precipitationProbability}%
+        🌧️ {t.precipitation} {precipitationProbability}%
       </Text>
 
     </View>

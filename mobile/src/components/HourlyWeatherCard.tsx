@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface HourlyWeatherCardProps {
   time: string;
@@ -11,6 +12,8 @@ export default function HourlyWeatherCard({
   temperature,
   precipitationProbability,
 }: HourlyWeatherCardProps) {
+
+  const { t } = useLanguage();
 
   const formattedTime = new Date(time).toLocaleTimeString([], {
     hour: 'numeric',
@@ -29,7 +32,7 @@ export default function HourlyWeatherCard({
       </Text>
 
       <Text style={styles.rain}>
-        🌧️ Rain {precipitationProbability}%
+        🌧️ {t.precipitation} {precipitationProbability}%
       </Text>
 
     </View>
