@@ -59,12 +59,17 @@ I AM ADDING DAY 2 README HERE
 * mobile/src/components/WeatherMap.tsx — Map component
 
 ## ▶️ Important Commands
-bash
+
 docker compose up -d
+
 docker compose ps
+
 docker compose logs backend
+
 cd mobile
+
 npm install
+
 npx expo start
 
 ## 🔌 Main APIs
