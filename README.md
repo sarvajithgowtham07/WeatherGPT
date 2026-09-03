@@ -43,7 +43,7 @@ I AM ADDING DAY 2 README HERE
 * **Backend:** FastAPI, Python, SQLAlchemy
 * **Database:** PostgreSQL + Docker
 * **APIs:** Open-Meteo (weather), Nominatim (location), Google Maps (map)
-* **AI:** Gemini — planned for chat/AI features
+
 
 ## 📁 Important Files
 * backend/app/api/v1/weather.py — Weather API route
