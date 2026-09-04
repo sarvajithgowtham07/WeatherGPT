@@ -8,7 +8,9 @@ def generate_chat_response(
     language: str,
     latitude: float | None,
     longitude: float | None,
-    weather_context: dict
+    weather_context: dict,
+    queried_location_name: str | None = None,
+    queried_weather_context: dict | None = None,
 ) -> str:
 
     prompt = build_chat_prompt(
@@ -17,7 +19,9 @@ def generate_chat_response(
         language=language,
         latitude=latitude,
         longitude=longitude,
-        weather_context=weather_context
+        weather_context=weather_context,
+        queried_location_name=queried_location_name,
+        queried_weather_context=queried_weather_context,
     )
 
     return generate_response(prompt)

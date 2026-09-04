@@ -1,7 +1,5 @@
-import { Tabs } from "expo-router";
-import { useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
-
+import { Tabs, router } from "expo-router";
+import { useEffect, useState } from "react";
 import {
   LanguageProvider,
   useLanguage,
@@ -11,158 +9,54 @@ function AppTabs() {
   const { t } = useLanguage();
 
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-        tabBarHideOnKeyboard: true,
-
-        // Make sure icons have room to display
-        tabBarShowLabel: true,
-      }}
-    >
-      {/* HOME */}
+    <Tabs>
       <Tabs.Screen
         name="index"
-        options={{
-          title: t.home,
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons
-              name={
-                focused
-                  ? "home"
-                  : "home-outline"
-              }
-              size={size}
-              color={color}
-            />
-          ),
-        }}
+        options={{ title: t.home }}
       />
 
-      {/* DASHBOARD */}
-      <Tabs.Screen
-        name="dashboard"
-        options={{
-          title: t.dashboard,
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons
-              name={
-                focused
-                  ? "grid"
-                  : "grid-outline"
-              }
-              size={size}
-              color={color}
-            />
-          ),
-        }}
-      />
-
-      {/* MAP */}
       <Tabs.Screen
         name="map"
-        options={{
-          title: t.map,
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons
-              name={
-                focused
-                  ? "map"
-                  : "map-outline"
-              }
-              size={size}
-              color={color}
-            />
-          ),
-        }}
+        options={{ title: t.map }}
       />
 
-      {/* CHAT */}
       <Tabs.Screen
         name="chat"
-        options={{
-          title: t.chat,
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons
-              name={
-                focused
-                  ? "chatbubble"
-                  : "chatbubble-outline"
-              }
-              size={size}
-              color={color}
-            />
-          ),
-        }}
+        options={{ title: t.chat }}
       />
 
-      {/* SETTINGS */}
       <Tabs.Screen
         name="settings"
-        options={{
-          title: t.settings,
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons
-              name={
-                focused
-                  ? "settings"
-                  : "settings-outline"
-              }
-              size={size}
-              color={color}
-            />
-          ),
-        }}
+        options={{ title: t.settings }}
       />
 
-      {/* PROFILE - HIDDEN */}
       <Tabs.Screen
         name="profile"
-        options={{
-          href: null,
-        }}
+        options={{ href: null }}
       />
 
-      {/* LANGUAGE - HIDDEN */}
       <Tabs.Screen
         name="language"
-        options={{
-          href: null,
-        }}
+        options={{ href: null }}
       />
     </Tabs>
   );
 }
 
 function AppContent() {
-  const [languageSelected, setLanguageSelected] =
-    useState(false);
+  const [ready, setReady] = useState(false);
 
-  if (!languageSelected) {
-    return (
-      <LanguageScreen
-        onLanguageSelected={() =>
-          setLanguageSelected(true)
-        }
-      />
-    );
+  useEffect(() => {
+    // Always show language selection when the app starts.
+    router.replace("/language");
+    setReady(true);
+  }, []);
+
+  if (!ready) {
+    return null;
   }
 
   return <AppTabs />;
-}
-
-function LanguageScreen({
-  onLanguageSelected,
-}: {
-  onLanguageSelected: () => void;
-}) {
-  const Screen = require("./language").default;
-
-  return (
-    <Screen
-      onLanguageSelected={onLanguageSelected}
-    />
-  );
 }
 
 export default function RootLayout() {

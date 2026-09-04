@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 
 from app.api.v1.health import router as health_router
@@ -11,6 +12,18 @@ from app.api.v1.voice import router as voice_router
 app = FastAPI(
     title="WeatherGPT API",
     version="1.0.0"
+)
+
+# Allow the Expo app (mobile + web preview) to call this API from any
+# origin/device on the network. Without this, requests made from a
+# browser (Expo web) are blocked by CORS before they even reach the
+# location-search / weather endpoints.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 

@@ -47,3 +47,6 @@ android/.gradle/
 android/local.properties
 android/app/build/
 android/build/
+
+
+node_modules/
