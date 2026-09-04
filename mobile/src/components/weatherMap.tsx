@@ -1,5 +1,6 @@
-import { View, StyleSheet } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import MapView, { Marker } from "react-native-maps";
 
 interface WeatherMapProps {
   latitude: number;
@@ -15,21 +16,18 @@ export default function WeatherMap({
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude: latitude,
-          longitude: longitude,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
+          latitude,
+          longitude,
+          latitudeDelta: 0.1,
+          longitudeDelta: 0.1,
         }}
-        showsUserLocation={true}
-        showsMyLocationButton={true}
+        mapType="standard"
       >
         <Marker
           coordinate={{
-            latitude: latitude,
-            longitude: longitude,
+            latitude,
+            longitude,
           }}
-          title="Your Location"
-          description="Current weather location"
         />
       </MapView>
     </View>
@@ -38,15 +36,15 @@ export default function WeatherMap({
 
 const styles = StyleSheet.create({
   container: {
+    width: "100%",
     height: 350,
-    width: '100%',
     marginTop: 20,
+    overflow: "hidden",
     borderRadius: 16,
-    overflow: 'hidden',
   },
 
   map: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
 });
