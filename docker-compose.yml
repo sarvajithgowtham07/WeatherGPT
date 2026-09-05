@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:16
-    container_name: weathergpt-postgres
+    container_name: weathergpt-friend-postgres
     restart: unless-stopped
 
     environment:
@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
     ports:
-      - "5432:5432"
+      - "5433:5432"
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -26,7 +26,7 @@ services:
     build:
       context: ./backend
 
-    container_name: weathergpt-backend
+    container_name: weathergpt-friend-backend
     restart: unless-stopped
 
     depends_on:
@@ -38,7 +38,7 @@ services:
       GEMINI_API_KEY: ${GEMINI_API_KEY}
 
     ports:
-      - "8000:8000"
+      - "8001:8000"
 
 volumes:
   postgres_data:
